@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --config jestconfig.json",
     "build": "tsc"
   },
   "keywords": [],
@@ -14,9 +14,15 @@
     "lib/**/*"
   ],
   "devDependencies": {
-    "typescript": "^3.9.6"
+    "@types/jest": "^26.0.7",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.3"
   },
   "dependencies": {
+    "@tensorflow-models/blazeface": "^0.0.5",
+    "@tensorflow/tfjs-converter": "^2.0.1",
+    "@tensorflow/tfjs-core": "^2.0.1",
     "fetch-inject": "^2.0.4"
   }
 }
