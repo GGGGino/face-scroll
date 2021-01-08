@@ -10,10 +10,9 @@ export function stampa(): string {
 /**
  * Open the camera and catch the face
  */
-export async function getBrowserWebcam() {
+export async function getBrowserWebcam(): Promise<MediaStream> {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: { facingMode: "user" } });
-    console.log(stream);
+    return await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "user" } });
   } catch(err) {
     console.warn('errore assimilazione webcam');
   }
@@ -22,7 +21,7 @@ export async function getBrowserWebcam() {
 /**
  * With the passed image we recognize the position
  */
-export async function getFacePosition() {
+export async function getFacePosition(videoNode: HTMLVideoElement) {
   // Load the model.
   const model = await blazeface.load();
 
@@ -30,8 +29,9 @@ export async function getFacePosition() {
   // bounding boxes, probabilities, and landmarks, one for each detected face.
 
   const returnTensors = false; // Pass in `true` to get tensors back, rather than values.
-  const canvasElement: HTMLImageElement|null = document.querySelector("img");
-  const predictions = await model.estimateFaces(canvasElement!, returnTensors);
+  const predictions = await model.estimateFaces(videoNode, returnTensors);
+
+  console.log(predictions);
 
   if (predictions.length > 0) {
     /*
